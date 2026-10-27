@@ -14,7 +14,7 @@ use bevy::{
     prelude::*,
     render::view::screenshot::{save_to_disk, Screenshot},
     ui::Checked,
-    ui_widgets::{slider_self_update, Activate, SliderStep, SliderValue, ValueChange},
+    ui_widgets::{slider_self_update, Activate, SliderPrecision, SliderStep, SliderValue, ValueChange},
 };
 
 /// 面板要调的参数，全部放在一个 Resource 里。
@@ -122,6 +122,7 @@ fn panel() -> impl Scene {
             @FeathersSlider { @max: 5.0 }
             SliderValue(1.0)
             SliderStep(0.1)
+            SliderPrecision(1)
             on(slider_self_update)
             on(|change: On<ValueChange<f32>>, mut s: ResMut<DebugSettings>| {
                 s.speed = change.value;
@@ -166,8 +167,7 @@ fn panel() -> impl Scene {
             })
             --
             @FeathersButton
-            on(|_: On<Activate>, mut s: ResMut<DebugSettings>, mut q: Query<&mut Transform, With<Target>>| {
-                s.speed = 1.0;
+            on(|_: On<Activate>, mut q: Query<&mut Transform, With<Target>>| {
                 for mut t in &mut q { t.rotation = Quat::IDENTITY; }
             })
             Children [ @caption("Reset rotation") ]

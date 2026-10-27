@@ -41,3 +41,9 @@ xvfb-run -a -s "-screen 0 1280x720x24" env WGPU_BACKEND=vulkan DEMO_SCREENSHOT=o
 - 0.17 和 0.18 的旧写法（`experimental_bevy_feathers` 特性加 spawn 函数）已经过时。0.19 起改用 BSN 写法。
 
 参考：bevyengine/bevy v0.20.0 的 `examples/ui/widgets/feathers_*.rs`
+
+## 交互实测（xdotool，Xvfb + llvmpipe）
+
+- 滑条：Feathers 滑条默认 `TrackClick::Drag`，单击轨道不跳值，要按住拖。拖到 4.0：`screenshots/demo-slider-drag.png`（加了 `SliderPrecision(1)`，否则拖动显示 3.9661016）。
+- 数字输入：按住左右拖，2000 → 2990：`screenshots/demo-number-drag.png`。
+- 按钮：取消 Spin 后点 Reset rotation，立方体回到初始朝向：`screenshots/demo-reset-button.png`。
